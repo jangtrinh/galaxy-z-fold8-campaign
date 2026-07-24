@@ -1,0 +1,29 @@
+{
+  "project": "Galaxy Z Fold8 — The Frame Unfolds",
+  "artifact": "single-file scroll-driven campaign landing page",
+  "surface": "Decide / Learn",
+  "intent": "Show that Galaxy Z Fold8 changes the shape of content rather than merely enlarging it.",
+  "must": [
+    "Use only Samsung-sourced product claims",
+    "Six visually distinct sections and a complete footer",
+    "Pinned hero and horizontal scroll narrative",
+    "Three-view product switcher",
+    "Responsive recomposition at desktop, tablet, and phone",
+    "Touch and prefers-reduced-motion behavior",
+    "No horizontal document overflow",
+    "Alt text for meaningful images",
+    "Disclosure that this is an independent design study"
+  ],
+  "mustNot": [
+    "Invent product specifications, reviews, awards, or testimonials",
+    "Copy Samsung's existing page composition",
+    "Repeat a centered hero or equal-card grid throughout",
+    "Bake essential text into images",
+    "Use decorative indicators that measure nothing"
+  ],
+  "sources": [
+    "https://www.samsung.com/us/smartphones/galaxy-z-fold8/",
+    "https://news.samsung.com/global/galaxy-unpacked-july-2026-a-first-look-at-galaxy-z-fold8-ultra-galaxy-z-fold8-and-galaxy-z-flip8"
+  ],
+  "status": "direction-locked"
+}
