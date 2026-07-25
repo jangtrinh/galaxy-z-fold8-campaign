@@ -25,3 +25,14 @@ Read before editing:
 ## Quality bar
 
 Original Awwwards-level composition, not a generic centered hero/equal-card template. The physical fold is the page’s spatial grammar: transitions should change aspect ratio, reading direction, or layer depth.
+
+## Silent bounded execution
+
+- When the user says they are sleeping, away, wants one report, or asks for silent execution: send no progress commentary after the initial acknowledgment.
+- Batch work into one implementation pass, one deterministic QA pass, and one deploy pass.
+- Maximum one retry per failure mode. After one browser-vision failure, use DOM assertions or deterministic checks.
+- Never surface process IDs, tool interruptions, predictions, or internal retry notes to Telegram while another path exists.
+- Do not expand scope before the requested change is complete.
+- Prefer the shortest reversible fix for specific feedback; layout feedback stays a CSS task.
+- Stage explicit production paths. Never include unrelated working-tree changes.
+- Report once after the live URL and production assets are verified.

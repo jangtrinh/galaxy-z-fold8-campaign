@@ -3,6 +3,7 @@
 from html.parser import HTMLParser
 from pathlib import Path
 import re
+import struct
 import sys
 from urllib.parse import urlparse
 
@@ -12,6 +13,18 @@ REQUIRED_ASSETS = [
     "assets/hero-open.png", "assets/view-folded.png",
     "assets/commerce-ghost.png", "assets/system-lab.jpg",
     "assets/finale-macro.png",
+]
+TRANSPARENT_ASSETS = [
+    "assets/hero-layers/hero-product-cutout.png",
+    *[
+        f"assets/section-cutouts/{name}-cutout.png"
+        for name in (
+            "02-folded-cover-wide", "03-hinge-transition-wide",
+            "04-dynamic-angle-wide", "05-static-rest-wide",
+            "06-commerce-open-wide", "07-system-exploded-wide",
+            "08-finale-macro-wide", "09-content-shape-wide",
+        )
+    ],
 ]
 
 class AuditParser(HTMLParser):
@@ -38,6 +51,21 @@ def main():
     for relative in ["index.html", *REQUIRED_ASSETS]:
         if not (ROOT / relative).is_file():
             errors.append(f"missing required file: {relative}")
+    for relative in TRANSPARENT_ASSETS:
+        path = ROOT / relative
+        if not path.is_file():
+            errors.append(f"missing transparent asset: {relative}")
+            continue
+        header = path.read_bytes()[:26]
+        if len(header) < 26 or header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
+            errors.append(f"invalid PNG: {relative}")
+            continue
+        width, height = struct.unpack(">II", header[16:24])
+        color_type = header[25]
+        if (width, height) != (1672, 941):
+            errors.append(f"wrong transparent asset size: {relative} ({width}x{height})")
+        if color_type != 6:
+            errors.append(f"transparent asset is not RGBA PNG: {relative}")
     if not PAGE.is_file():
         return report(errors)
     source = PAGE.read_text(encoding="utf-8")
@@ -52,6 +80,11 @@ def main():
         errors.append("missing viewport meta")
     if "prefers-reduced-motion" not in source:
         errors.append("missing reduced-motion CSS")
+    if source.count("data-depth") < 7:
+        errors.append("depth layering is not applied across the required sections")
+    for token in ("--depth-fg-scroll", "--depth-bg-scroll", "pointerleave"):
+        if token not in source:
+            errors.append(f"missing depth behavior: {token}")
     if parser.images_without_alt:
         errors.append("images without alt: " + ", ".join(parser.images_without_alt))
     if re.search(r"(?:src|href)=[\"'](?:file:|/(?!/)|[A-Za-z]:\\)", source):
