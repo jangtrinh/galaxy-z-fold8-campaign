@@ -10,9 +10,8 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "index.html"
 REQUIRED_ASSETS = [
-    "assets/hero-open.png", "assets/view-folded.png",
-    "assets/commerce-ghost.png", "assets/system-lab.jpg",
-    "assets/finale-macro.png",
+    "assets/hero-layers/hero-background-layer.png",
+    "assets/hero-layers/hero-product-cutout.png",
 ]
 TRANSPARENT_ASSETS = [
     "assets/hero-layers/hero-product-cutout.png",
